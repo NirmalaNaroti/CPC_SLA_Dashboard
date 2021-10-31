@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4ee4f3fe-a0c2-4e65-aea0-ce28a030445c" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1tvgfITzBNVLl3sgImYvjhLKuUY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CIBG_Digitization_Again" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fragma.dto" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\CEPL\Downloads\CPC_SLA_Dashboard" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.fragma.Application" />
+      <module name="CPC_SLA_Dashboard" />
+      <option name="PROGRAM_PARAMETERS" value="--businessDate=20211016" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fragma.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ee4f3fe-a0c2-4e65-aea0-ce28a030445c" name="Default Changelist" comment="" />
+      <created>1623655078615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623655078615</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634542536266">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1634542536266" />
+    <state x="488" y="57" key="#com.intellij.ide.util.MemberChooser" timestamp="1634559345314">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="488" y="57" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1634559345314" />
+    <state x="463" y="122" key="FileChooserDialogImpl" timestamp="1635663360342">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="122" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1635663360342" />
+    <state width="1323" height="468" key="GridCell.Tab.0.bottom" timestamp="1635317509103">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="468" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1635317509103" />
+    <state width="1323" height="468" key="GridCell.Tab.0.center" timestamp="1635317509103">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="468" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1635317509103" />
+    <state width="1323" height="468" key="GridCell.Tab.0.left" timestamp="1635317509102">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="468" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1635317509102" />
+    <state width="1323" height="468" key="GridCell.Tab.0.right" timestamp="1635317509103">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="468" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1635317509103" />
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1634459537989">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1634459537989" />
+    <state x="390" y="120" width="586" height="488" key="find.popup" timestamp="1635663371291">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="390" y="120" width="586" height="488" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1635663371291" />
+    <state x="391" y="0" key="refactoring.ChangeSignatureDialog" timestamp="1634554121566">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="391" y="0" key="refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728" timestamp="1634554121566" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1634712391744">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1634712391744" />
+  </component>
+</project>

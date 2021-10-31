@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title> SLA DASHBOARD</title>
+    <style>
+    table, th, td {
+       font-family:'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
+           text-align: center;
+           border: 2px solid black;
+           border-collapse: collapse;
+           white-space: nowrap;
+           font-size:12px;
+    }
+    th {
+      padding: 5px;
+    }
+    .blue {
+      text-align:center;
+      background-color: #00008b;
+      font-weight : bold;
+       font-size:15px;
+        color:white;
+    }
+    .lightPurple{
+      background-color: #E0D8E7;
+       font-weight : bold;
+      font-size:15px;
+    }
+    .darkBlue {
+      text-align:center;
+      background-color: #00008b;
+      font-weight : bold;
+      font-size:20px;
+      color:white;
+    }
+    .lightPink{
+      background-color: #ffcccc;
+      font-weight : bold;
+      font-size:15px;
+      width:80px;
+    }
+     .Red{
+      background-color: #ff751a;
+      color:red;
+    }
+     .Green{
+      background-color: #00b33c;
+      color:green;
+    }
+    .lightGreen{
+      background-color:   #ccffcc;
+      font-weight : bold;
+      width:80px;
+    }
+     .salwanPink{
+      background-color:   #ff91a4;
+      font-weight : bold;
+
+    }
+     .lightGreenGreen{
+      background-color:#ccffcc;
+      color:green;
+    }
+    .sand{
+      background-color: #e5cdaa;
+      font-weight :bold;
+      font-size:15px;
+    }
+     .lightGreenSienna{
+      background-color:   #ccffcc;
+      color:Sienna;
+    }
+    .background{
+      background-color:   black;
+      width:10px;
+
+    }
+    .hide{
+    display: none;
+    }
+
+
+    </style>
+
+</head>
+<body>
+<H1>CPC SLA Dashboard - <span th:text="${mainDto.subDate()}"> </span></H1>
+
+
+    <table style="width: 100%">
+
+        <tr>
+            <th class="lightPurple" colspan="20" > CPC-SLA Dashboard(manual)</th>
+        </tr>
+
+        <tr>
+            <th class="lightPurple" colspan="20" > All Customer</th>
+        </tr>
+        <tr>
+            <th class="lightPurple" colspan="20" > Previous Day- <span th:text="${mainDto.subDate()}"> </span> </th>
+        </tr>
+        <tr>
+            <th class="lightPink" rowspan="2">SL No</th>
+
+            <th class="lightPink" rowspan="2">CPC Units</th>
+            <th class="lightPink" rowspan="2">Applications</th>
+
+            <th class="lightPink" rowspan="2">Total<br/> Volume </th>
+            <th class="sand" colspan="5">CPC Weighted SLA - Clean </th>
+          <!--  <th th:text="${mainDto.getWeightedCleanVolumePercentage()}"> </th>-->
+
+            <th  style="font-size:15px;" th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                    </span>
+
+                <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                    </span>
+                <span th:if="${color=='blank'}"
+                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                    </span>
+
+            </th>
+
+
+            <th class="background"></th>
+            <th class="sand" colspan="5">CPC Weighted SLA - Referred  </th>
+
+            <!--<th th:text="${mainDto.getWeightedRefferedVolumePercentage()}"> </th>-->
+
+            <th  style="font-size:15px;" th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                    </span>
+
+                <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                    </span>
+                <span th:if="${color=='blank'}"
+                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                    </span>
+
+            </th>
+
+        </tr>
+        <tr>
+            <th style=" width:80px;" class="lightGreen" >Clean Vol</th>
+            <th style=" width:80px;" class="lightGreen" >Clean Vol %</th>
+            <th  style=" width:80px;" class="lightGreen" >Clean SLA Target % ( Transaction Same day)</th>
+            <th style=" width:80px;" class="lightGreen" >Clean SLA Met %</th>
+
+            <th style=" width:80px;" class="lightGreen" >Clean Vol SLA Met </th>
+            <th style=" width:80px;" class="lightGreen" >Clean Vol SLA Not Met </th>
+            <th  class="background"></th>
+            <th style=" width:80px;" class="lightPink" >Referred Vol </th>
+            <th style=" width:80px;" class="lightPink" >Referred Vol % </th>
+            <th style=" width:80px;" class="lightPink" >Referred SLA Target % (transaction Same day) </th>
+            <th style=" width:80px;" class="lightPink" >Referred SLA Met % </th>
+            <th style=" width:80px;" class="lightPink" >Referred Vol SLA  Met  </th>
+            <th style=" width:80px;" class="lightPink" >Referred Vol SLA Not Met  </th>
+            <th style=" width:80px;" class="lightPink">Awaiting Cover</th>
+            <th style=" width:80px;" class="lightPink">OPS Misses Vol Cover</th>
+            <th style=" width:80px;" class="lightPink">IT Misses Vol</th>
+
+
+
+        </tr>
+
+        <div th:each="customer : ${mainDto.getCpcTableSet()}">
+
+            <th:block th:if="${customer=='Total'}">
+
+                <tr style=" font-weight:bold; font-size:15px;">
+                    <td style=" width:80px;"></td>
+                    <td style="text-align: center;" th:text="${customer}">Sample Customer Type</td>
+                    <td style=" width:80px;"></td>
+
+                    <td style=" width:80px;" class="blue" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getTotalVolume())}">25</td>
+                    <td style=" width:80px;font-size:15px;" class="lightGreen"  th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolume())}">25</td>
+
+                    <td class="lightGreen" style="font-size:15px;"   th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanVolumePercentage())}">25</td>
+                    <td class="lightGreen" style="font-size:15px;">100%</td>
+
+                    <td style=" width:80px;font-size:15px;" class="lightGreen"  th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage()),mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getTotalVolume()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='blank'}"
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+
+                    </td>
+                    <td class="lightGreen" style="font-size:15px;" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolSlaMet())}">25</td>
+
+                    <td class="lightGreen" style="font-size:15px;" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolSlaNotMet())}">25</td>
+                    <td  class="background"> </td>
+
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolume())}">25</td>
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedVolPercentage())}">25</td>
+                    <td style=" width:80px;" class="lightPink">100%</td>
+
+
+                    <td style=" width:80px;" class="lightPink" th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage()),mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getTotalVolume()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+                        <span th:if="${color=='blank'}"
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+
+                    </td>
+
+
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolSlaMet())}">25</td>
+
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolSlaNotMet())}">25</td>
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getAwaitingCover())}">25</td>
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getOpsMissesVol())}">25</td>
+                    <td style=" width:80px;" class="lightPink" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getITMissesVol())}">25</td>
+
+
+
+
+
+
+                </tr>
+            </th:block>
+            <th:block th:unless="${customer=='Total'}">
+                <tr style=" font-weight:bold;">
+                    <td th:text = "${mainDto.serialNum()}" ></td>
+                    <td style="text-align: center;" th:text="${customer}">Sample Customer Type</td>
+                    <td  th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getApplication())}">25</td>
+
+                    <td  class="blue" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getTotalVolume())}">25</td>
+                    <td  th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolume())}">25</td>
+
+                    <td   th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanVolumePercentage())}">25</td>
+                    <td>100%</td>
+
+                    <td th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage()),mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getTotalVolume()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='blank'}"
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getCleanSlaMetPercentage())}">
+                    </span>
+
+
+                    </td>
+
+                    <td   th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolSlaMet())}">25</td>
+
+
+                    <td   th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getCleanVolSlaNotMet())}">25</td>
+                    <td class="background"> </td>
+
+                    <td  th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolume())}">25</td>
+                    <td  th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedVolPercentage())}">25</td>
+                    <td>100%</td>
+
+
+                    <td th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage()),mainDto.longToLong(mainDto.getCpcReportMap().get(customer).getTotalVolume()))}">
+
+                    <span th:if="${color=='green'}" style="background-color:#99ff33; "
+                          th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+
+                        <span th:if="${color=='red'}" style="background-color:#ff9999; "
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+                        <span th:if="${color=='blank'}"
+                              th:text="${mainDto.isNullOrEmpty(mainDto.getCpcReportMap().get(customer).getRefferedSlaMetPercentage())}">
+                    </span>
+
+                    </td>
+
+                    <td  th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolSlaMet())}">25</td>
+
+
+                    <td  th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getRefferalVolSlaNotMet())}">25</td>
+
+
+                    <td class="" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getAwaitingCover())}">25</td>
+                    <td class="" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getOpsMissesVol())}">25</td>
+                    <td class="" th:text="${mainDto.longToString(mainDto.getCpcReportMap().get(customer).getITMissesVol())}">25</td>
+
+
+
+                </tr>
+            </th:block>
+
+        </div>
+    </table>
+    <br/>
+    <br/>
+
+
+
+
+
+
+
+
+
+<br /><br />
+<!--<p>
+    Note:The data is based on the primary CIF captured
+</p>-->
+
+</body>
+</html>
