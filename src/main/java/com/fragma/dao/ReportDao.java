@@ -41,8 +41,9 @@ public class ReportDao {
         return text;
     }
 
-    public void getPCBUData(MainDto mainDto, java.util.Date businessDate){
+    public void getPCBUData(MainDto mainDto, java.util.Date businessDate, String unit){
         LOG.info("***** executing getPCBUData *****");
+        LOG.info("=======Executing Query for========"+unit);
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -60,9 +61,11 @@ public class ReportDao {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
 
-                String unit = isNullOrEmpty(resultSet.getString("Unit"));
+             //   String unit = isNullOrEmpty(resultSet.getString("Unit"));
 
                 String exitDate = isNullOrEmpty(resultSet.getString("Exit_date"));
+                String application ="EDMS";
+
                 Long totalVolume =resultSet.getLong("Total_Volume");
                 Long cleanVolume =resultSet.getLong("Clean_Volume");
                 Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_Met");
@@ -72,9 +75,6 @@ public class ReportDao {
                 Long refferalVolSlaMet = resultSet.getLong("Referral_Vol_Met");
                 Long refferalVolSlaNotMet = resultSet.getLong("Referral_Vol_Not_Met");
                 Long awaitingCover=0L;
-
-                String application = "EDMS";
-
 
 
               // LOG.info("account_number:"+account_number+"rm_name:"+rm_name+"account_currency:"+account_currency+"account_class:"+account_class+"account_title:"+account_title+"trans_date:"+trans_date+"trn_ref_no"+trn_ref_no+"checker_id"+checker_id+"trn_ref_no"+trn_ref_no+"return_cheque_no"+return_cheque_no+"return_cheque_amount"+return_cheque_amount+"return_reason"+return_reason+"narration"+narration);
@@ -161,12 +161,11 @@ public class ReportDao {
 
                 }
 
-
                 //String application="EDMS And Flex";
 
                 if (unit.equalsIgnoreCase("Total")) {
 
-                    mainDto.setInwardsRemittanceTotalVolAndAwaitingReqDataFromQuery("Inward Remittance", exitDate, totalVolume, awaiting_req);
+                    mainDto.setInwardsRemittanceTotalVolAndAwaitingReqDataFromQuery("Inward Remittance", exitDate, totalVolume,awaiting_req);
                 }
 
 
@@ -178,13 +177,18 @@ public class ReportDao {
         });
     }
 
-    public void getInvestigationData(MainDto mainDto){
+    public void getInvestigationData(MainDto mainDto, java.util.Date businessDate, String unit){
         LOG.info("***** executing getInvestigationData *****");
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                LOG.info("Query = "+ ConfigurationHelper.getPcbuQuery() );
-                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getPcbuQuery());
+                LOG.info("Query = "+ ConfigurationHelper.getInvestigationsQuery() );
+                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getInvestigationsQuery());
+
+                java.sql.Date date = new java.sql.Date(businessDate.getTime());
+                LOG.info("Prepared Statement before bind =" + ps.toString());
+                LOG.info("DATE to pass in query==>"+formateDate(date));
+                ps.setString(1, formateDate(date));
 
                 return ps;
             }
@@ -192,17 +196,17 @@ public class ReportDao {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
 
-                String unit = isNullOrEmpty(resultSet.getString("Unit"));
+               // String unit = isNullOrEmpty(resultSet.getString("Unit"));
 
-                String exitDate = isNullOrEmpty(resultSet.getString("Exit_date"));
+                String exitDate = isNullOrEmpty(resultSet.getString("reporting_date"));
                 Long totalVolume =resultSet.getLong("Total_Volume");
                 Long cleanVolume =resultSet.getLong("Clean_Volume");
-                Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_Met");
-                Long cleanVolSlaNotMet = resultSet.getLong("clean_Vol_Not_Met");
+                Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_sla_Met");
+                Long cleanVolSlaNotMet = resultSet.getLong("clean_Vol_sla_Not_Met");
 
-                Long refferalVolume = resultSet.getLong("Refferal_Volume");
-                Long refferalVolSlaMet = resultSet.getLong("Refferal_Vol_Met");
-                Long refferalVolSlaNotMet = resultSet.getLong("Refferal_Vol_Not_Met");
+                Long refferalVolume = resultSet.getLong("Referral_Volume");
+                Long refferalVolSlaMet = resultSet.getLong("Referral_Vol_sla_Met");
+                Long refferalVolSlaNotMet = resultSet.getLong("Referral_Vol_sla_Not_Met");
                 Long awaitingCover=0L;
                 String application="Sherlock,EDMS And TLM";
 
@@ -420,6 +424,55 @@ public class ReportDao {
             }
         });
     }
+
+    public void getReconData(MainDto mainDto, java.util.Date businessDate, String unit){
+        LOG.info("***** executing getReconData *****");
+        jdbcTemplate.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                LOG.info("Query = "+ ConfigurationHelper.getReconQuery() );
+                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getReconQuery());
+
+                java.sql.Date date = new java.sql.Date(businessDate.getTime());
+                LOG.info("Prepared Statement before bind =" + ps.toString());
+                LOG.info("DATE to pass in query==>"+formateDate(date));
+                ps.setString(1, formateDate(date));
+
+                return ps;
+            }
+        },new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+
+                // String unit = isNullOrEmpty(resultSet.getString("Unit"));
+
+                String exitDate = isNullOrEmpty(resultSet.getString("dated"));
+                Long totalVolume =resultSet.getLong("Total_Volume");
+
+                Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_sla_Met");
+                Long cleanVolSlaNotMet = resultSet.getLong("clean_Vol_sla_Not_Met");
+
+                Long cleanVolume =0L;
+
+                if(cleanVolSlaMet != null || cleanVolSlaNotMet != null) {
+                    cleanVolume = cleanVolSlaMet + cleanVolSlaNotMet;
+                }
+
+                Long refferalVolume = 0L;
+                Long refferalVolSlaMet = 0L;
+                Long refferalVolSlaNotMet = 0L;
+                Long awaitingCover=0L;
+                String application="TLM";
+
+
+
+                // LOG.info("account_number:"+account_number+"rm_name:"+rm_name+"account_currency:"+account_currency+"account_class:"+account_class+"account_title:"+account_title+"trans_date:"+trans_date+"trn_ref_no"+trn_ref_no+"checker_id"+checker_id+"trn_ref_no"+trn_ref_no+"return_cheque_no"+return_cheque_no+"return_cheque_amount"+return_cheque_amount+"return_reason"+return_reason+"narration"+narration);
+
+                mainDto.populateData(exitDate,unit,totalVolume,cleanVolume,cleanVolSlaMet,cleanVolSlaNotMet,refferalVolume,refferalVolSlaMet,refferalVolSlaNotMet,awaitingCover,application);
+            }
+        });
+    }
+
 
 
 

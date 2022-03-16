@@ -88,6 +88,13 @@ public class Runner implements ApplicationRunner {
             businessDateCal.set(businessDateCal.get(Calendar.YEAR), businessDateCal.get(Calendar.MONTH), businessDateCal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
 
+            Calendar nextBusinessDateCal = Calendar.getInstance();
+            nextBusinessDateCal.setTime(businessDate);
+            nextBusinessDateCal.add(Calendar.DAY_OF_MONTH, 1);
+            nextBusinessDateCal.set(nextBusinessDateCal.get(Calendar.YEAR), nextBusinessDateCal.get(Calendar.MONTH), nextBusinessDateCal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+
+            LOG.info("Today:"+nextBusinessDateCal.getTime());
 
             mainDto.setDates(businessDate);
 
@@ -96,7 +103,7 @@ public class Runner implements ApplicationRunner {
 
            // reportDao.getOutWardRemitanceData(mainDto);
 
-            reportDao.getPCBUData(mainDto,businessDate);
+            reportDao.getPCBUData(mainDto,businessDate,Controls.PCBU);
             reportDao.getInwardRemitanceData(mainDto,businessDate);
             //reportDao.getInvestigationData(mainDto);
             //reportDao.getInwardClearingData(mainDto);
@@ -105,6 +112,10 @@ public class Runner implements ApplicationRunner {
             reportDao.getPDCTranferandChequeCollectionData(mainDto,businessDate);
             reportDao.getCMUData(mainDto,businessDate);
 
+
+            reportDao.getInvestigationData(mainDto,nextBusinessDateCal.getTime(),Controls.Investigation);
+
+            reportDao.getReconData(mainDto,businessDate,Controls.Recon);
 
             excelFileReading.readingInwardRemittanceExcelSheetData(mainDto,ConfigurationHelper.getExcelLocationForInwardRemittance());
             excelFileReading.readingWPSandNonWPSPayrollExcelSheetData(Controls.WPS_And_Non_WPS_Payroll,mainDto,ConfigurationHelper.getExcelLocationForWPSandNonWPSPayroll());

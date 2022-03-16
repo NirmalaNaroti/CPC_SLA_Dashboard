@@ -20,6 +20,8 @@ public class Controls {
 
     public static final String CMU = "CMU";
 
+    public static final String Recon = "Recon";
+
     public static final String Total = "Total";
 
 }

@@ -92,7 +92,7 @@
     <table style="width: 100%">
 
         <tr>
-            <th class="lightPurple" colspan="20" > CPC-SLA Dashboard(manual)</th>
+            <th class="lightPurple" colspan="20" > CPC-SLA Dashboard</th>
         </tr>
 
         <tr>
@@ -114,14 +114,14 @@
             <th  style="font-size:15px;" th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
 
                     <span th:if="${color=='green'}" style="background-color:#99ff33; "
-                          th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                          th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
                     </span>
 
                 <span th:if="${color=='red'}" style="background-color:#ff9999; "
-                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                      th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
                     </span>
                 <span th:if="${color=='blank'}"
-                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
+                      th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedCleanVolumePercentage()))}">
                     </span>
 
             </th>
@@ -135,14 +135,14 @@
             <th  style="font-size:15px;" th:with="color=${mainDto.getColor(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
 
                     <span th:if="${color=='green'}" style="background-color:#99ff33; "
-                          th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                          th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
                     </span>
 
                 <span th:if="${color=='red'}" style="background-color:#ff9999; "
-                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                      th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
                     </span>
                 <span th:if="${color=='blank'}"
-                      th:text="${mainDto.isNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
+                      th:text="${mainDto.isWeightedPartNullOrEmpty(mainDto.longToLong(mainDto.getWeightedRefferedVolumePercentage()))}">
                     </span>
 
             </th>

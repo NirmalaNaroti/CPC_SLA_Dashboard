@@ -83,16 +83,17 @@ public class MainDto {
 
     public void hardCordData() {
 
-        cpcTableSet.add("Outward Remittance");
-        cpcTableSet.add("Inward Remittance");
-        cpcTableSet.add("PCBU");
-        cpcTableSet.add("Investigation");
-        cpcTableSet.add("Inward Clearing");
-        cpcTableSet.add("Outward Clearing");
-        cpcTableSet.add("WPS And Non WPS Payroll");
-        cpcTableSet.add("PDC,Transfer And Cheque Collection");
-        cpcTableSet.add("CMU");
-        cpcTableSet.add("Total");
+        cpcTableSet.add(Controls.Outward_Remittance);
+        cpcTableSet.add(Controls.Inward_Remittance);
+        cpcTableSet.add(Controls.PCBU);
+        cpcTableSet.add(Controls.Investigation);
+        cpcTableSet.add(Controls.Inward_Clearing);
+        cpcTableSet.add(Controls.Outward_Clearing);
+        cpcTableSet.add(Controls.WPS_And_Non_WPS_Payroll);
+        cpcTableSet.add(Controls.PDC_Transfer_And_Cheque_Collection);
+        cpcTableSet.add(Controls.CMU);
+        cpcTableSet.add(Controls.Recon);
+        cpcTableSet.add(Controls.Total);
 
         for (String table : cpcTableSet) {
 
@@ -137,6 +138,10 @@ public class MainDto {
             {
                 htmlSummary.setApplication("GTS,ECCS,FLEX and CCS");
             }
+            if(table.equalsIgnoreCase(Controls.Recon))
+            {
+                htmlSummary.setApplication("TLM");
+            }
 
             cpcReportMap.put(table, htmlSummary);
         }
@@ -150,6 +155,20 @@ public class MainDto {
 
     public String isNullOrEmpty(Long  value)
     {
+        LOG.info("Value"+value);
+        LOG.info("KKKKKKKK");
+        if(value == null || value == 0 )
+        {
+            return "0%";
+        }
+        else
+            return  value+"%";
+    }
+
+    public String isWeightedPartNullOrEmpty(Long  value)
+    {
+        LOG.info("Value"+value);
+        LOG.info("KKKKKKKK");
         if(value == null || value == 0 )
         {
             return "0%";
@@ -174,6 +193,8 @@ public class MainDto {
 
     public String isNullOrEmpty(String  value)
     {
+        LOG.info("UUUUUUUUUUUUU");
+        LOG.info("value"+value);
         if(value == null || value.isEmpty() || value.equals("\"\""))
         {
             return "-";
@@ -203,7 +224,7 @@ public class MainDto {
                 LOG.info("CleanVolume:"+entry.getValue().getCleanVolume());
                 LOG.info("CleanVolSlaMet:"+entry.getValue().getCleanVolSlaMet());
                 LOG.info("CleanVolSlaNotMet:"+entry.getValue().getCleanVolSlaNotMet());
-                LOG.info("CleanVolSlaNotMet Percentage:"+entry.getValue());
+                LOG.info("CleanVolSlaMet Percentage:"+entry.getValue().getCleanSlaMetPercentage());
                 LOG.info("RefferalVolume:"+entry.getValue().getRefferalVolume());
                 LOG.info("RefferalVolSlaMet:"+entry.getValue().getRefferalVolSlaMet());
                 LOG.info("RefferalVolSlaNotMet:"+entry.getValue().getRefferalVolSlaNotMet());
@@ -404,6 +425,8 @@ public class MainDto {
             cpcReportMap.get(unit).setRefferalVolume(referralVolume);
             cpcReportMap.get(unit).setRefferalVolSlaMet(referralVolMet);
             cpcReportMap.get(unit).setRefferalVolSlaNotMet(referralVolNotMet);
+
+           // cpcReportMap.get(unit).setAwaitingCover(awaitingCover);
 
             cpcReportMap.get(unit).setOpsMissesVol(opsMissesVol);
             cpcReportMap.get(unit).setITMissesVol(itMissesVol);
@@ -608,7 +631,7 @@ public class MainDto {
 
             if( !unit.equalsIgnoreCase(Controls.Total) && htmlSummary.getTotalVolume() != null) {
 
-                if (cpcReportMap.get("Total").getExitDate() == null) {
+                if (cpcReportMap.get("Total").getTotalVolume() == null) {
 
                     LOG.info("Fiirst Unit"+unit);
 

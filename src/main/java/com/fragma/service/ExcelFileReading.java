@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 @Service
@@ -49,6 +51,8 @@ public class ExcelFileReading {
 
             FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
+            String strDate=" ";
+
             //Iterate through each rows one by one
             Iterator<Row> rowIterator = sheet.iterator();
             while (rowIterator.hasNext()) {
@@ -59,6 +63,22 @@ public class ExcelFileReading {
                     LOG.info("Excel Read Data");
 
                     //LOG.info("ExitDate==>" + row.getCell(1));
+
+
+                int firstRowNum = row.getRowNum();
+
+                if (firstRowNum == 0)
+                {
+                   Date  exitDate = new Date(String.valueOf(row.getCell(1)));
+                    LOG.info("Before Parsing Date"+exitDate);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                     strDate = dateFormat.format(exitDate);
+                    LOG.info("DATEEEE==>"+strDate);
+                }
+
+
+
+
 
 
                     String unit = checkNotNull(row.getCell(0));
@@ -74,13 +94,23 @@ public class ExcelFileReading {
                         String strDate = dateFormat.format(exitDate);*/
                         //long totalVolume = (long) (row.getCell(1).getNumericCellValue());
 
+                        LOG.info("strDate==>"+strDate);
+                        LOG.info("BusinessDate==>"+mainDto.getBusinessDate());
+
+                       /* if (strDate.equals(String.valueOf(mainDto.getBusinessDate()))){
+
+                            LOG.info(strDate+"==================="+mainDto.getBusinessDate());
+*/
+
+
                         long cleanVolSlaNotMet = checkValueNotNull(row.getCell(2));
                         long referralVolume = checkValueNotNull(row.getCell(3));
                         long referralVolMet = checkValueNotNull(row.getCell(4));
                         long referralVolNotMet = checkValueNotNull(row.getCell(5));
-                        long opsMissesVol = checkValueNotNull(row.getCell(6));
+                       // long awaitingCover = checkValueNotNull(row.getCell(6));
+                        long opsMissesVol = checkValueNotNull(row.getCell(7));
                         //long itMissesVol = (long) (row.getCell(7).getNumericCellValue());
-                        long itMissesVol =  checkValueNotNull(row.getCell(7));
+                        long itMissesVol =  checkValueNotNull(row.getCell(8));
 
 
                         //LOG.info("Total_Volume==>" + row.getCell(1));
@@ -88,6 +118,7 @@ public class ExcelFileReading {
                         LOG.info("Referred Vol==>" + referralVolume);
                         LOG.info("Referral_Vol_MET==>" + referralVolMet);
                         LOG.info("Referral_Vol_Not_MET==>" + referralVolNotMet);
+                       // LOG.info("Awaiting Cover"+awaitingCover);
                         LOG.info("OPSMisses Vol"+ opsMissesVol);
                         LOG.info("IT Misses Vol"+itMissesVol);
 
@@ -96,6 +127,9 @@ public class ExcelFileReading {
                         mainDto.populateInwardRemitanceDataOfExcel( Controls.Inward_Remittance,cleanVolSlaNotMet, referralVolume, referralVolMet, referralVolNotMet,opsMissesVol,itMissesVol);
 
                         System.out.println("");
+                        /*}else {
+                            LOG.info("Not Equal");
+                        }*/
                     }
             }
             file.close();
@@ -236,6 +270,7 @@ public class ExcelFileReading {
                 Row row = rowIterator.next();
                 //For each row, iterate through all the columns
                 Iterator<Cell> cellIterator = row.cellIterator();
+
 
 
                 LOG.info("Excel Read Data");

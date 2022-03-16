@@ -15,6 +15,7 @@ public class ConfigurationHelper {
     private static String  wpsandNonwpsPayrollQuery;
     private static String  pdcTransferandChequeCollectionQuery;
     private static String  cmuQuery;
+    private static String reconQuery;
 
     private static String excelLocationForInwardRemittance;
     private static String excelLocationForWPSandNonWPSPayroll;
@@ -124,5 +125,13 @@ public class ConfigurationHelper {
 
     public static void setExcelLocationForPDCTransferAndChequeCollection(String excelLocationForPDCTransferAndChequeCollection) {
         ConfigurationHelper.excelLocationForPDCTransferAndChequeCollection = excelLocationForPDCTransferAndChequeCollection;
+    }
+
+    public static String getReconQuery() {
+        return reconQuery;
+    }
+
+    public static void setReconQuery(String reconQuery) {
+        ConfigurationHelper.reconQuery = reconQuery;
     }
 }
