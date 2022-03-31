@@ -5,25 +5,25 @@ public class HtmlSummary {
     String unit;
 
     String exitDate ;
-    Long totalVolume ;
-    Long cleanVolume ;
-    Long cleanVolSlaMet ;
-    Long cleanVolSlaNotMet;
+    long totalVolume ;
+    long cleanVolume ;
+    long cleanVolSlaMet ;
+    long cleanVolSlaNotMet;
 
-    Long refferalVolume;
-    Long refferalVolSlaMet ;
-    Long refferalVolSlaNotMet;
-    Long awaitingCover;
+    long refferalVolume;
+    long refferalVolSlaMet ;
+    long refferalVolSlaNotMet;
+    long awaitingCover;
 
     String application ;
 
-    private  Long cleanVolumePercentage;
-    private Long cleanSlaMetPercentage;
-    private Long refferedVolPercentage;
-    private Long refferedSlaMetPercentage;
+    private  long cleanVolumePercentage;
+    private long cleanSlaMetPercentage;
+    private long refferedVolPercentage;
+    private long refferedSlaMetPercentage;
 
-    private  Long opsMissesVol;
-    private  Long ITMissesVol;
+    private  long opsMissesVol;
+    private  long ITMissesVol;
 
     double volumeWeight;
     double weightedCleanVolume;
@@ -48,67 +48,67 @@ public class HtmlSummary {
         this.exitDate = exitDate;
     }
 
-    public Long getTotalVolume() {
+    public long getTotalVolume() {
         return totalVolume;
     }
 
-    public void setTotalVolume(Long totalVolume) {
+    public void setTotalVolume(long totalVolume) {
         this.totalVolume = totalVolume;
     }
 
-    public Long getCleanVolume() {
+    public long getCleanVolume() {
         return cleanVolume;
     }
 
-    public void setCleanVolume(Long cleanVolume) {
+    public void setCleanVolume(long cleanVolume) {
         this.cleanVolume = cleanVolume;
     }
 
-    public Long getCleanVolSlaMet() {
+    public long getCleanVolSlaMet() {
         return cleanVolSlaMet;
     }
 
-    public void setCleanVolSlaMet(Long cleanVolSlaMet) {
+    public void setCleanVolSlaMet(long cleanVolSlaMet) {
         this.cleanVolSlaMet = cleanVolSlaMet;
     }
 
-    public Long getCleanVolSlaNotMet() {
+    public long getCleanVolSlaNotMet() {
         return cleanVolSlaNotMet;
     }
 
-    public void setCleanVolSlaNotMet(Long cleanVolSlaNotMet) {
+    public void setCleanVolSlaNotMet(long cleanVolSlaNotMet) {
         this.cleanVolSlaNotMet = cleanVolSlaNotMet;
     }
 
-    public Long getRefferalVolume() {
+    public long getRefferalVolume() {
         return refferalVolume;
     }
 
-    public void setRefferalVolume(Long refferalVolume) {
+    public void setRefferalVolume(long refferalVolume) {
         this.refferalVolume = refferalVolume;
     }
 
-    public Long getRefferalVolSlaMet() {
+    public long getRefferalVolSlaMet() {
         return refferalVolSlaMet;
     }
 
-    public void setRefferalVolSlaMet(Long refferalVolSlaMet) {
+    public void setRefferalVolSlaMet(long refferalVolSlaMet) {
         this.refferalVolSlaMet = refferalVolSlaMet;
     }
 
-    public Long getRefferalVolSlaNotMet() {
+    public long getRefferalVolSlaNotMet() {
         return refferalVolSlaNotMet;
     }
 
-    public void setRefferalVolSlaNotMet(Long refferalVolSlaNotMet) {
+    public void setRefferalVolSlaNotMet(long refferalVolSlaNotMet) {
         this.refferalVolSlaNotMet = refferalVolSlaNotMet;
     }
 
-    public Long getAwaitingCover() {
+    public long getAwaitingCover() {
         return awaitingCover;
     }
 
-    public void setAwaitingCover(Long awaitingCover) {
+    public void setAwaitingCover(long awaitingCover) {
         this.awaitingCover = awaitingCover;
     }
 
@@ -120,51 +120,51 @@ public class HtmlSummary {
         this.application = application;
     }
 
-    public Long getCleanVolumePercentage() {
+    public long getCleanVolumePercentage() {
         return cleanVolumePercentage;
     }
 
-    public void setCleanVolumePercentage(Long cleanVolumePercentage) {
+    public void setCleanVolumePercentage(long cleanVolumePercentage) {
         this.cleanVolumePercentage = cleanVolumePercentage;
     }
 
-    public Long getCleanSlaMetPercentage() {
+    public long getCleanSlaMetPercentage() {
         return cleanSlaMetPercentage;
     }
 
-    public void setCleanSlaMetPercentage(Long cleanSlaMetPercentage) {
+    public void setCleanSlaMetPercentage(long cleanSlaMetPercentage) {
         this.cleanSlaMetPercentage = cleanSlaMetPercentage;
     }
 
-    public Long getRefferedVolPercentage() {
+    public long getRefferedVolPercentage() {
         return refferedVolPercentage;
     }
 
-    public void setRefferedVolPercentage(Long refferedVolPercentage) {
+    public void setRefferedVolPercentage(long refferedVolPercentage) {
         this.refferedVolPercentage = refferedVolPercentage;
     }
 
-    public Long getRefferedSlaMetPercentage() {
+    public long getRefferedSlaMetPercentage() {
         return refferedSlaMetPercentage;
     }
 
-    public void setRefferedSlaMetPercentage(Long refferedSlaMetPercentage) {
+    public void setRefferedSlaMetPercentage(long refferedSlaMetPercentage) {
         this.refferedSlaMetPercentage = refferedSlaMetPercentage;
     }
 
-    public Long getOpsMissesVol() {
+    public long getOpsMissesVol() {
         return opsMissesVol;
     }
 
-    public void setOpsMissesVol(Long opsMissesVol) {
+    public void setOpsMissesVol(long opsMissesVol) {
         this.opsMissesVol = opsMissesVol;
     }
 
-    public Long getITMissesVol() {
+    public long getITMissesVol() {
         return ITMissesVol;
     }
 
-    public void setITMissesVol(Long ITMissesVol) {
+    public void setITMissesVol(long ITMissesVol) {
         this.ITMissesVol = ITMissesVol;
     }
 

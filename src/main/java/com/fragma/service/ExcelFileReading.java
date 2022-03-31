@@ -344,7 +344,7 @@ public class ExcelFileReading {
 
         }
 
-        LOG.info("Inward Remittance Excel file read successfully ");
+        LOG.info(unit+" Excel file read successfully ");
 
 
     }
@@ -362,5 +362,91 @@ public class ExcelFileReading {
             return 0;
         }
         return (long) (row.getCell(i).getNumericCellValue());
+    }
+
+    public void readingOutwardClearing(String unit, MainDto mainDto, String outwardClearingfile) {
+
+        LOG.info("***** executing readingOuwardClearing File ****** ");
+
+        try {
+            LOG.info("Unit"+unit);
+
+            FileInputStream file = new FileInputStream(new File(outwardClearingfile));
+
+            //Create Workbook instance holding reference to .xlsx file
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+            //Get first/desired sheet from the workbook
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
+            //Iterate through each rows one by one
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                //For each row, iterate through all the columns
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+
+
+                LOG.info("Excel Read Data");
+
+
+                //LOG.info("ExitDate==>" + row.getCell(1));
+
+                String rowname = checkNotNull(row.getCell(0));
+                //String rowname = checkUnitIsNullOrNot(row.getCell(0).getStringCellValue());
+
+                LOG.info("rowname==>" + rowname);
+
+                if(rowname.equalsIgnoreCase("Outward Clearing")) {
+
+                        /*Date exitDate = new Date(String.valueOf(row.getCell(1)));
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String strDate = dateFormat.format(exitDate);*/
+                    //long totalVolume = (long) (row.getCell(1).getNumericCellValue());
+
+
+
+
+
+
+
+
+                    long totalVolume = checkValueNotNull (row.getCell(1));
+
+                    long referralVolMet = checkValueNotNull (row.getCell(6));
+                    long referralVolNotMet = checkValueNotNull (row.getCell(7));
+
+
+                    LOG.info("Unit"+unit);
+                    LOG.info("Total Volume==>" + totalVolume);
+
+                    LOG.info("Referral_Vol_MET==>" + referralVolMet);
+                    LOG.info("Referral_Vol_Not_MET==>" + referralVolNotMet);
+
+
+
+                    mainDto.populateOutwardClearingDataOfExcel( unit,totalVolume,  referralVolMet, referralVolNotMet);
+
+
+                    //  LOG.info("unit==>" + unit +   " cleanVolSlaNotMet==>" + cleanVolSlaNotMet + " referralVolume==>" + referralVolume + " referralVolMet==>" + referralVolMet + " referralVolNotMet==>" + referralVolNotMet);
+
+                    // mainDto.populateWPSandNonWPSPayrollDataOfExcel(unit,cleanVolSlaMet,cleanVolSlaNotMet, referralVolume, referralVolMet, referralVolNotMet,awaitingCover,itMissesVol,opsMissesVol);
+
+
+                    System.out.println("");
+                }
+
+            }
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        LOG.info(unit+" Excel file read successfully ");
+
     }
 }

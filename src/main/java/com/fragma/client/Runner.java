@@ -105,17 +105,16 @@ public class Runner implements ApplicationRunner {
 
             reportDao.getPCBUData(mainDto,businessDate,Controls.PCBU);
             reportDao.getInwardRemitanceData(mainDto,businessDate);
-            //reportDao.getInvestigationData(mainDto);
-            //reportDao.getInwardClearingData(mainDto);
-            //reportDao.getOutwardClearingData(mainDto);
+
             reportDao.getWpsandNonwpsPayrollData(mainDto,businessDate);
             reportDao.getPDCTranferandChequeCollectionData(mainDto,businessDate);
             reportDao.getCMUData(mainDto,businessDate);
-
-
             reportDao.getInvestigationData(mainDto,nextBusinessDateCal.getTime(),Controls.Investigation);
-
             reportDao.getReconData(mainDto,businessDate,Controls.Recon);
+            reportDao.getOutwardClearingData(mainDto,businessDate,Controls.Outward_Clearing);
+
+            reportDao.getInwardClearingData(mainDto,Controls.Inward_Clearing,businessDate);
+
 
             excelFileReading.readingInwardRemittanceExcelSheetData(mainDto,ConfigurationHelper.getExcelLocationForInwardRemittance());
             excelFileReading.readingWPSandNonWPSPayrollExcelSheetData(Controls.WPS_And_Non_WPS_Payroll,mainDto,ConfigurationHelper.getExcelLocationForWPSandNonWPSPayroll());
@@ -123,10 +122,13 @@ public class Runner implements ApplicationRunner {
             excelFileReading.readingCMUAndPDCTransferandChequeCollectionExcelSheetData(Controls.CMU,mainDto,ConfigurationHelper.getExcelLocationForCMU());
             excelFileReading.readingCMUAndPDCTransferandChequeCollectionExcelSheetData(Controls.PDC_Transfer_And_Cheque_Collection,mainDto,ConfigurationHelper.getExcelLocationForPDCTransferAndChequeCollection());
 
+            excelFileReading.readingOutwardClearing(Controls.Outward_Clearing,mainDto,ConfigurationHelper.getExcelLocationForOutwardClearing());
+
+            mainDto.getMapData();
 
             mainDto.calculatingTotalOfAllUnits();
 
-            mainDto.getMapData();
+
 
 
             //mainDto.calculatingWeightedCleanAndReferredSLA();

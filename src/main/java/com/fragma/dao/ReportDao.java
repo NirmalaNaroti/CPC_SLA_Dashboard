@@ -219,13 +219,20 @@ public class ReportDao {
         });
     }
 
-    public void getInwardClearingData(MainDto mainDto){
+    public void getInwardClearingData(MainDto mainDto, String unit, java.util.Date businessDate){
         LOG.info("***** executing getInwardClearingData *****");
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                LOG.info("Query = "+ ConfigurationHelper.getPcbuQuery() );
-                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getPcbuQuery());
+                LOG.info("Query = "+ ConfigurationHelper.getInwardClearingQuery() );
+                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getInwardClearingQuery());
+
+                java.sql.Date date = new java.sql.Date(businessDate.getTime());
+                LOG.info("Prepared Statement before bind =" + ps.toString());
+                LOG.info("DATE to pass in query==>"+formateDate(date));
+                ps.setString(1, formateDate(date));
+
+
 
                 return ps;
             }
@@ -233,17 +240,23 @@ public class ReportDao {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
 
-                String unit = isNullOrEmpty(resultSet.getString("Unit"));
 
-                String exitDate = isNullOrEmpty(resultSet.getString("Exit_date"));
-                Long totalVolume =resultSet.getLong("Total_Volume");
-                Long cleanVolume =resultSet.getLong("Clean_Volume");
-                Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_Met");
-                Long cleanVolSlaNotMet = resultSet.getLong("clean_Vol_Not_Met");
 
-                Long refferalVolume = resultSet.getLong("Refferal_Volume");
-                Long refferalVolSlaMet = resultSet.getLong("Refferal_Vol_Met");
-                Long refferalVolSlaNotMet = resultSet.getLong("Refferal_Vol_Not_Met");
+                String exitDate = isNullOrEmpty(resultSet.getString("dated"));
+                Long totalVolume =resultSet.getLong("Total_Vol");
+                //Long cleanVolume =resultSet.getLong("Clean_Volume");
+                Long cleanVolSlaMet =resultSet.getLong("Clean_sla_Met");
+                Long cleanVolSlaNotMet = resultSet.getLong("clean_sla_Not_Met");
+
+                Long cleanVolume = cleanVolSlaMet + cleanVolSlaNotMet;
+
+               // Long refferalVolume = resultSet.getLong("Referral_Volume");
+                Long refferalVolSlaMet = resultSet.getLong("Referred_sla_Met");
+                Long refferalVolSlaNotMet = resultSet.getLong("Referred_sla_Not_Met");
+
+                Long refferalVolume = refferalVolSlaMet + refferalVolSlaNotMet;
+
+
                 Long awaitingCover=0L;
                 String application="KCS and Dexter";
 
@@ -256,43 +269,6 @@ public class ReportDao {
         });
     }
 
-    public void getOutwardClearingData(MainDto mainDto){
-        LOG.info("***** executing getOutwardClearingData *****");
-        jdbcTemplate.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                LOG.info("Query = "+ ConfigurationHelper.getPcbuQuery() );
-                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getPcbuQuery());
-
-                return ps;
-            }
-        },new RowCallbackHandler() {
-            @Override
-            public void processRow(ResultSet resultSet) throws SQLException {
-
-                String unit = isNullOrEmpty(resultSet.getString("Unit"));
-
-                String exitDate = isNullOrEmpty(resultSet.getString("Exit_date"));
-                Long totalVolume =resultSet.getLong("Total_Volume");
-                Long cleanVolume =resultSet.getLong("Clean_Volume");
-                Long cleanVolSlaMet =resultSet.getLong("Clean_Vol_Met");
-                Long cleanVolSlaNotMet = resultSet.getLong("clean_Vol_Not_Met");
-
-                Long refferalVolume = resultSet.getLong("Refferal_Volume");
-                Long refferalVolSlaMet = resultSet.getLong("Refferal_Vol_Met");
-                Long refferalVolSlaNotMet = resultSet.getLong("Refferal_Vol_Not_Met");
-                Long awaitingCover=0L;
-                String application="KCS and Dexter";
-
-
-
-
-                // LOG.info("account_number:"+account_number+"rm_name:"+rm_name+"account_currency:"+account_currency+"account_class:"+account_class+"account_title:"+account_title+"trans_date:"+trans_date+"trn_ref_no"+trn_ref_no+"checker_id"+checker_id+"trn_ref_no"+trn_ref_no+"return_cheque_no"+return_cheque_no+"return_cheque_amount"+return_cheque_amount+"return_reason"+return_reason+"narration"+narration);
-
-                mainDto.populateData(exitDate,unit,totalVolume,cleanVolume,cleanVolSlaMet,cleanVolSlaNotMet,refferalVolume,refferalVolSlaMet,refferalVolSlaNotMet,awaitingCover,application);
-            }
-        });
-    }
 
     public void getWpsandNonwpsPayrollData(MainDto mainDto, java.util.Date businessDate){
         LOG.info("***** executing getWpsandNonwpsPayrollData *****");
@@ -472,6 +448,50 @@ public class ReportDao {
             }
         });
     }
+
+
+    public void getOutwardClearingData(MainDto mainDto, java.util.Date businessDate, String unit){
+        LOG.info("***** executing getOutwardClearingData *****");
+        jdbcTemplate.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                LOG.info("Query = "+ ConfigurationHelper.getOutwardClearingQuery() );
+                PreparedStatement ps = connection.prepareStatement(ConfigurationHelper.getOutwardClearingQuery());
+
+                java.sql.Date date = new java.sql.Date(businessDate.getTime());
+                LOG.info("Prepared Statement before bind =" + ps.toString());
+                LOG.info("DATE to pass in query==>"+formateDate(date));
+                ps.setString(1, formateDate(date));
+
+                return ps;
+            }
+        },new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+
+
+
+                String dated = isNullOrEmpty(resultSet.getString("dated"));
+
+
+                long referralCount = resultSet.getLong("Referral_count");
+                long ocCount = resultSet.getLong("oc_count");
+
+
+                Long awaitingCover=0L;
+                String application="KCS and Dexter";
+
+                mainDto.setOutwardClearingReferralansSLAMetCount(unit,dated,referralCount,ocCount,awaitingCover,application);
+
+
+
+                // LOG.info("account_number:"+account_number+"rm_name:"+rm_name+"account_currency:"+account_currency+"account_class:"+account_class+"account_title:"+account_title+"trans_date:"+trans_date+"trn_ref_no"+trn_ref_no+"checker_id"+checker_id+"trn_ref_no"+trn_ref_no+"return_cheque_no"+return_cheque_no+"return_cheque_amount"+return_cheque_amount+"return_reason"+return_reason+"narration"+narration);
+
+             //   mainDto.populateData(exitDate,unit,totalVolume,cleanVolume,cleanVolSlaMet,cleanVolSlaNotMet,refferalVolume,refferalVolSlaMet,refferalVolSlaNotMet,awaitingCover,application);
+            }
+        });
+    }
+
 
 
 

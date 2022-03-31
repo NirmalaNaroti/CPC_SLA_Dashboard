@@ -21,6 +21,7 @@ public class ConfigurationHelper {
     private static String excelLocationForWPSandNonWPSPayroll;
     private static String excelLocationForCMU;
     private static String excelLocationForPDCTransferAndChequeCollection;
+    private static String excelLocationForOutwardClearing;
 
 
     public static String getPcbuQuery() {
@@ -133,5 +134,13 @@ public class ConfigurationHelper {
 
     public static void setReconQuery(String reconQuery) {
         ConfigurationHelper.reconQuery = reconQuery;
+    }
+
+    public static String getExcelLocationForOutwardClearing() {
+        return excelLocationForOutwardClearing;
+    }
+
+    public static void setExcelLocationForOutwardClearing(String excelLocationForOutwardClearing) {
+        ConfigurationHelper.excelLocationForOutwardClearing = excelLocationForOutwardClearing;
     }
 }

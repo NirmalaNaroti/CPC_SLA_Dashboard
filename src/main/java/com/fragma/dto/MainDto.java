@@ -417,7 +417,7 @@ public class MainDto {
 
     public void populateInwardRemitanceDataOfExcel(String unit, long cleanVolSlaNotMet, long referralVolume, long referralVolMet, long referralVolNotMet, long opsMissesVol, long itMissesVol) {
 
-        if(cpcReportMap.get(unit).getTotalVolume() != null) {
+        if(cpcReportMap.get(unit).getTotalVolume() != 0) {
 
 
 
@@ -459,7 +459,7 @@ public class MainDto {
 
                 LOG.info("Unit == >"+ unit);
 
-                if (cpcReportMap.get(unit).getTotalVolume() != null) {
+                if (cpcReportMap.get(unit).getTotalVolume() != 0) {
 
                     LOG.info("Total Volume" + cpcReportMap.get(unit).getTotalVolume());
                     //Setting volume weight
@@ -536,7 +536,7 @@ public class MainDto {
 
     public void populateWPSandNonWPSPayrollDataOfExcel(String unit, long cleanVolSlaMet, long cleanVolSlaNotMet, long referralVolume, long referralVolMet, long referralVolNotMet, long awaitingCover, long itMissesVol, long opsMissesVol) {
 
-        if(cpcReportMap.get(unit).getCleanVolume() == null) {
+        if(cpcReportMap.get(unit).getCleanVolume() == 0) {
             cpcReportMap.get(unit).setCleanVolume(0L);
         }
 
@@ -573,7 +573,7 @@ public class MainDto {
 
     public void populateCMUAndPDCTransferAndChequeCollectionDataOfExcel(String unit, long cleanVolSlaNotMet, long referralVolume, long referralVolMet, long referralVolNotMet, long opsMissesVol, long itMissesVol, long cleanVolume, long awaitingCover, long cleanVolSlaMet) {
 
-        if(cpcReportMap.get(unit).getCleanVolume() == null) {
+        if(cpcReportMap.get(unit).getCleanVolume() == 0) {
             cpcReportMap.get(unit).setCleanVolume(0L);
         }
 
@@ -629,9 +629,9 @@ public class MainDto {
 
             HtmlSummary htmlSummary = cpcReportMap.get(unit);
 
-            if( !unit.equalsIgnoreCase(Controls.Total) && htmlSummary.getTotalVolume() != null) {
+            if( !unit.equalsIgnoreCase(Controls.Total) && htmlSummary.getTotalVolume() != 0) {
 
-                if (cpcReportMap.get("Total").getTotalVolume() == null) {
+                if (cpcReportMap.get("Total").getTotalVolume() == 0) {
 
                     LOG.info("Fiirst Unit"+unit);
 
@@ -710,7 +710,7 @@ public class MainDto {
                 }
 
 
-                if (cpcReportMap.get(unit).getTotalVolume() != null) {
+                if (cpcReportMap.get(unit).getTotalVolume() != 0) {
 
                     LOG.info("Total Volume" + cpcReportMap.get(unit).getTotalVolume());
                     //Setting volume weight
@@ -752,6 +752,50 @@ public class MainDto {
 
         LOG.info("weightedCleanVolumePercentage" + weightedCleanVolumePercentage);
         LOG.info("weightedRefferedVolumePercentage" + weightedRefferedVolumePercentage);
+
+    }
+
+    public void setOutwardClearingReferralansSLAMetCount(String unit, String dated, long referralCount, long ocCount, Long awaitingCover, String application) {
+
+        cpcReportMap.get(unit).setExitDate(dated);
+        cpcReportMap.get(unit).setUnit(unit);
+        cpcReportMap.get(unit).setRefferalVolume(referralCount);
+
+        Long cleanSLAMet = ocCount - referralCount ;
+        cpcReportMap.get(unit).setCleanVolSlaMet(cleanSLAMet);
+
+        cpcReportMap.get(unit).setApplication(application);
+        cpcReportMap.get(unit).setAwaitingCover(awaitingCover);
+    }
+
+    public void populateOutwardClearingDataOfExcel(String unit, long totalVolume, long referralVolMet, long referralVolNotMet) {
+
+        cpcReportMap.get(unit).setTotalVolume(totalVolume);
+
+        long cleanVolume = cpcReportMap.get(unit).getTotalVolume() - cpcReportMap.get(unit).getRefferalVolume();
+        cpcReportMap.get(unit).setCleanVolume(cleanVolume);
+
+        long cleanVolSlaNotMet = cpcReportMap.get(unit).getCleanVolume() - cpcReportMap.get(unit).getCleanVolSlaMet();
+        cpcReportMap.get(unit).setCleanVolSlaNotMet(cleanVolSlaNotMet);
+
+        cpcReportMap.get(unit).setRefferalVolSlaMet(referralVolMet);
+        cpcReportMap.get(unit).setRefferalVolSlaNotMet(referralVolNotMet);
+
+
+        cpcReportMap.get(unit).setOpsMissesVol(0L);
+        cpcReportMap.get(unit).setITMissesVol(0L);
+
+        Long cleanVolPercentage = getPercentage(cpcReportMap.get(unit).getCleanVolume(), cpcReportMap.get(unit).getTotalVolume());
+        cpcReportMap.get(unit).setCleanVolumePercentage(cleanVolPercentage);
+
+        Long cleanSlaMetPercentage = getPercentage(cpcReportMap.get(unit).getCleanVolSlaMet(), cpcReportMap.get(unit).getCleanVolume());
+        cpcReportMap.get(unit).setCleanSlaMetPercentage(cleanSlaMetPercentage);
+
+        Long refferedVolPercentage = getPercentage(cpcReportMap.get(unit).getRefferalVolume(), cpcReportMap.get(unit).getTotalVolume());
+        cpcReportMap.get(unit).setRefferedVolPercentage(refferedVolPercentage);
+
+        Long refferedSlaMetPercentage = getPercentage(cpcReportMap.get(unit).getRefferalVolSlaMet(), cpcReportMap.get(unit).getRefferalVolume());
+        cpcReportMap.get(unit).setRefferedSlaMetPercentage(refferedSlaMetPercentage);
 
     }
 }
