@@ -243,6 +243,7 @@ public class ReportDao {
 
 
                 String exitDate = isNullOrEmpty(resultSet.getString("dated"));
+
                 Long totalVolume =resultSet.getLong("Total_Vol");
                 //Long cleanVolume =resultSet.getLong("Clean_Volume");
                 Long cleanVolSlaMet =resultSet.getLong("Clean_sla_Met");
